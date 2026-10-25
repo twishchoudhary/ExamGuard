@@ -1,3 +1,5 @@
+let isExamActive = false;
+let allowAppQuit = false;
 const { BrowserWindow, app, ipcMain, dialog, session, systemPreferences } = require("electron");
 const path = require("path");
 
@@ -19,6 +21,9 @@ function createWindow() {
   session.defaultSession.setPermissionRequestHandler((wc, perm, cb) => cb(true));
   session.defaultSession.setPermissionCheckHandler(() => true);
   win.loadURL("http://localhost:5173/");
+  win.on("blur", () => win && !win.isDestroyed() && win.webContents.send("window-focus-changed", { focused: false, timestamp: Date.now() }));
+  win.on("focus", () => win && !win.isDestroyed() && win.webContents.send("window-focus-changed", { focused: true, timestamp: Date.now() }));
+
   win.on("enter-full-screen", () => win && !win.isDestroyed() && win.webContents.send("fullscreen-state-change", { isFullScreen: true }));
   win.on("leave-full-screen", () => win && !win.isDestroyed() && win.webContents.send("fullscreen-state-change", { isFullScreen: false }));
 }
@@ -58,3 +63,5 @@ ipcMain.handle("set-fullscreen", (_, enable = true) => {
   return false;
 });
 ipcMain.handle("is-fullscreen", () => Boolean(win && !win.isDestroyed() && win.isFullScreen()));
+
+ipcMain.handle("set-exam-active", (_, active) => (isExamActive = Boolean(active)));
