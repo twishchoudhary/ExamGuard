@@ -5,9 +5,6 @@ import { mockQuestions } from "./data/mockQuestions";
 export default function App() {
   const videoRef = useRef(null);
   const examVideoRef = useRef(null);
-  const audioContextRef = useRef(null);
-  const analyserRef = useRef(null);
-  const animFrameRef = useRef(null);
   const micStreamRef = useRef(null);
 
   // Exam state
@@ -21,7 +18,6 @@ export default function App() {
   // Device & Proctoring states (Features 1, 2, 3)
   const [cameraReady, setCameraReady] = useState(false);
   const [micReady, setMicReady] = useState(false);
-  const [micLevel, setMicLevel] = useState(0);
   const [cameraStream, setCameraStream] = useState(null);
 
   // Security & Violations (Features 4, 5, 6)
@@ -84,7 +80,7 @@ export default function App() {
   }
 
   // -------------------------------------------------------------
-  // Feature 2: Microphone Access & Realtime Meter
+  // Feature 2: Microphone Access
   // -------------------------------------------------------------
   async function getMicrophone() {
     try {
@@ -92,47 +88,9 @@ export default function App() {
         await window.electronAPI.requestMicPermission();
       }
 
-      let stream;
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({
-          audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
-        });
-      } catch {
-        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      }
-
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       micStreamRef.current = stream;
       setMicReady(true);
-
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      const audioCtx = new AudioCtx();
-      audioContextRef.current = audioCtx;
-
-      if (audioCtx.state === "suspended") {
-        await audioCtx.resume();
-      }
-
-      const analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 256;
-      analyser.smoothingTimeConstant = 0.4;
-      analyserRef.current = analyser;
-
-      const source = audioCtx.createMediaStreamSource(stream);
-      source.connect(analyser);
-      
-      const bufferLength = analyser.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-      
-      const monitorAudio = () => {
-        if (!analyserRef.current) return;
-        analyserRef.current.getByteFrequencyData(dataArray);
-        let sum = 0;
-        for (let i = 0; i < bufferLength; i++) sum += dataArray[i];
-        const avg = sum / bufferLength;
-        setMicLevel(Math.min(100, Math.round((avg / 128) * 100)));
-        animFrameRef.current = requestAnimationFrame(monitorAudio);
-      };
-      monitorAudio();
     } catch (err) {
       console.error("Microphone access failed:", err);
       alert(err.name === "NotAllowedError" ? "Microphone permission denied. Please allow microphone access in system settings." : `Microphone error: ${err.message}`);
@@ -141,10 +99,6 @@ export default function App() {
 
   useEffect(() => {
     return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-      if (audioContextRef.current && audioContextRef.current.state !== "closed") {
-        audioContextRef.current.close().catch(() => {});
-      }
       if (micStreamRef.current) {
         micStreamRef.current.getTracks().forEach((t) => t.stop());
       }
@@ -490,20 +444,14 @@ export default function App() {
                 <div className="permission-icon">🎙️</div>
                 <div className="permission-content">
                   <h3>Configure Microphone</h3>
-                  <p>Kindly configure Microphone and speak to test audio input.</p>
+                  <p>Kindly configure Microphone to attempt quiz/contests.</p>
                   <div className="action-row">
                     <button onClick={getMicrophone} className={`btn ${micReady ? "btn-success" : "btn-dark"}`}>
                       {micReady ? "✓ Microphone Verified" : "Get Microphone Access"}
                     </button>
                   </div>
                 </div>
-                <div className="mic-check-box">
-                  <span className="mic-status-label">{micReady ? "✓ Audio Input Verified" : "Speak to test input"}</span>
-                  <div className="mic-meter-track">
-                    <div className={`mic-meter-fill ${micReady ? "active" : ""}`} style={{ width: `${Math.max(4, micLevel)}%` }} />
-                  </div>
-                  <span className="mic-status-label" style={{ fontSize: "11px", color: "#888" }}>Level: {micLevel}%</span>
-                </div>
+                <div />
               </div>
 
               <div className="divider" />

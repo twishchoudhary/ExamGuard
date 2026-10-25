@@ -152,43 +152,6 @@ body {
   object-fit: cover;
 }
 
-.mic-check-box {
-  width: 220px;
-  padding: 16px;
-  border-radius: 8px;
-  background: #faf9f7;
-  border: 1px solid #e0ded9;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.mic-meter-track {
-  width: 100%;
-  height: 12px;
-  background: #e6e3df;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.mic-meter-fill {
-  height: 100%;
-  background: #7eb5e9;
-  border-radius: 6px;
-  transition: width 0.08s ease;
-}
-
-.mic-meter-fill.active {
-  background: #2e7d32;
-}
-
-.mic-status-label {
-  font-size: 12px;
-  font-weight: 500;
-  color: #555555;
-  text-align: center;
-}
-
 .divider {
   height: 1px;
   background: #ebe9e5;

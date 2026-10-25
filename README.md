@@ -13,15 +13,13 @@ A modern desktop assessment and proctoring application built with **Electron** a
 
 ### 2. Microphone Access
 - Requests microphone permission and acquires live audio stream.
-- Analyzes real-time volume levels using the Web Audio API (`AudioContext` and `AnalyserNode`).
-- Renders an animated live VU volume meter (0% to 100%) with dynamic gradient colors and speech thresholds.
+- Seamlessly integrates system audio capture through modern media APIs.
 
 ### 3. Camera and Microphone Check
-- Pre-flight diagnostic checklist before entering the assessment:
-  - **Camera Check:** Confirms stream readiness, metadata acquisition, and video frame delivery.
-  - **Microphone Check:** Verifies audible input by requiring candidate speech above threshold (>12%).
-  - **Candidate Check:** Requires candidate identification.
-- Gatekeeper lock: The "Begin Exam" button is disabled until all diagnostic checks pass.
+- Pre-flight diagnostic verification before entering the assessment:
+  - **Camera Check:** Confirms webcam stream readiness and video frame delivery.
+  - **Microphone Check:** Confirms audio hardware input stream acquisition and permissions.
+- Gatekeeper lock: The "Go To Test" button remains locked until both devices are verified.
 
 ### 4. Fullscreen Mode
 - Automatically engages Electron fullscreen mode upon exam entry.
