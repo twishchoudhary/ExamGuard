@@ -65,3 +65,9 @@ ipcMain.handle("set-fullscreen", (_, enable = true) => {
 ipcMain.handle("is-fullscreen", () => Boolean(win && !win.isDestroyed() && win.isFullScreen()));
 
 ipcMain.handle("set-exam-active", (_, active) => (isExamActive = Boolean(active)));
+
+ipcMain.handle("save-session", (_, sessionData) => {
+  return { success: true, timestamp: Date.now() };
+});
+ipcMain.handle("get-saved-session", () => ({ success: true, session: null }));
+ipcMain.handle("clear-session", () => ({ success: true }));
