@@ -71,3 +71,7 @@ ipcMain.handle("save-session", (_, sessionData) => {
 });
 ipcMain.handle("get-saved-session", () => ({ success: true, session: null }));
 ipcMain.handle("clear-session", () => ({ success: true }));
+
+ipcMain.handle("capture-screenshot", async (_, metadata = {}) => {
+  return { success: true, screenshot: { id: "shot_" + Date.now(), reason: metadata.reason || "periodic" } };
+});
