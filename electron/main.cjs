@@ -21,6 +21,11 @@ function createWindow() {
   win.loadURL("http://localhost:5173/");
 }
 
+ipcMain.handle("check-system-permissions", () => ({
+  cameraStatus: process.platform === "darwin" ? systemPreferences.getMediaAccessStatus("camera") : "granted",
+  micStatus: process.platform === "darwin" ? systemPreferences.getMediaAccessStatus("microphone") : "granted",
+}));
+
 ipcMain.handle("request-mic-permission", async () => {
   if (process.platform === "darwin") {
     try {
