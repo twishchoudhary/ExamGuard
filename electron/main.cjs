@@ -19,6 +19,8 @@ function createWindow() {
   session.defaultSession.setPermissionRequestHandler((wc, perm, cb) => cb(true));
   session.defaultSession.setPermissionCheckHandler(() => true);
   win.loadURL("http://localhost:5173/");
+  win.on("enter-full-screen", () => win && !win.isDestroyed() && win.webContents.send("fullscreen-state-change", { isFullScreen: true }));
+  win.on("leave-full-screen", () => win && !win.isDestroyed() && win.webContents.send("fullscreen-state-change", { isFullScreen: false }));
 }
 
 ipcMain.handle("check-system-permissions", () => ({
@@ -47,3 +49,12 @@ ipcMain.handle("request-camera-permission", async () => {
 });
 
 app.whenReady().then(createWindow);
+
+ipcMain.handle("set-fullscreen", (_, enable = true) => {
+  if (win && !win.isDestroyed()) {
+    win.setFullScreen(enable);
+    return win.isFullScreen();
+  }
+  return false;
+});
+ipcMain.handle("is-fullscreen", () => Boolean(win && !win.isDestroyed() && win.isFullScreen()));
