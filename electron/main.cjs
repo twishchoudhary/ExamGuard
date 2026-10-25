@@ -75,3 +75,6 @@ ipcMain.handle("clear-session", () => ({ success: true }));
 ipcMain.handle("capture-screenshot", async (_, metadata = {}) => {
   return { success: true, screenshot: { id: "shot_" + Date.now(), reason: metadata.reason || "periodic" } };
 });
+
+ipcMain.handle("get-screenshots", () => ({ success: true, screenshots: [] }));
+ipcMain.handle("open-screenshots-folder", () => ({ success: true }));
