@@ -21,6 +21,16 @@ function createWindow() {
   win.loadURL("http://localhost:5173/");
 }
 
+ipcMain.handle("request-mic-permission", async () => {
+  if (process.platform === "darwin") {
+    try {
+      const status = systemPreferences.getMediaAccessStatus("microphone");
+      return status === "granted" || (await systemPreferences.askForMediaAccess("microphone"));
+    } catch { return true; }
+  }
+  return true;
+});
+
 ipcMain.handle("request-camera-permission", async () => {
   if (process.platform === "darwin") {
     try {
