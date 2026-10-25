@@ -1,11 +1,12 @@
 {
-  "name": "athena_phase_1",
+  "name": "examguard",
   "private": true,
   "version": "0.0.0",
   "main": "./electron/main.cjs",
   "scripts": {
     "start": "electron .",
     "dev": "vite",
+    "app": "npm run build && electron .",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

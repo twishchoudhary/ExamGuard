@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+.vite/
+athena_screenshots/
+camera_feed/
+*.json.bak
 
 # Editor directories and files
 .vscode/*
