@@ -40,8 +40,15 @@ const writeJSON = (file, data) => {
 };
 
 async function loadApplication(targetWindow) {
-  const devUrl = "http://localhost:5173/";
   const distFile = path.join(__dirname, "..", "dist", "index.html");
+
+  if (app.isPackaged) {
+    if (fs.existsSync(distFile)) {
+      return targetWindow.loadFile(distFile);
+    }
+  }
+
+  const devUrl = "http://localhost:5173/";
   const isDevRunning = await new Promise((resolve) => {
     const req = http.get(devUrl, (res) => resolve(res.statusCode < 400));
     req.on("error", () => resolve(false));
