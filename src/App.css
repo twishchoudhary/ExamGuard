@@ -2,10 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 html,
@@ -21,15 +18,38 @@ body {
 }
 
 /* =========================
+   Top Bar / Brand
+========================= */
+
+.top-nav {
+  width: 100%;
+  padding: 20px 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111111;
+  letter-spacing: -0.3px;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* =========================
    Setup Page
 ========================= */
 
 .page-container {
   width: 100%;
-  min-height: 100vh;
-
-  padding: 60px 40px;
-
+  min-height: calc(100vh - 60px);
+  padding: 40px 40px 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,24 +61,20 @@ body {
 
 .header-section {
   text-align: center;
-
   margin-bottom: 30px;
 }
 
 .header-section h1 {
-  font-size: 20px;
-  font-weight: 500;
-
+  font-size: 22px;
+  font-weight: 700;
   color: #242424;
-
   margin-bottom: 6px;
 }
 
 .header-section p {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 400;
-
-  color: #333333;
+  color: #555555;
 }
 
 /* =========================
@@ -68,14 +84,10 @@ body {
 .card-container {
   width: 100%;
   max-width: 920px;
-
   background: #ffffff;
-
   border: 1px solid #e7e4df;
   border-radius: 12px;
-
   overflow: hidden;
-
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.025);
 }
 
@@ -85,72 +97,103 @@ body {
 
 .permission-item {
   display: grid;
-
-  grid-template-columns: 42px 1fr;
-
-  column-gap: 26px;
-
-  padding: 44px 48px;
+  grid-template-columns: 42px 1fr auto;
+  column-gap: 24px;
+  align-items: center;
+  padding: 36px 44px;
 }
-
-/* =========================
-   Icon
-========================= */
 
 .permission-icon {
   width: 42px;
   height: 42px;
-
   display: flex;
   align-items: flex-start;
   justify-content: center;
-
   padding-top: 4px;
-
   color: #464646;
-
   font-size: 22px;
 }
-
-/* =========================
-   Permission Content
-========================= */
 
 .permission-content {
   text-align: left;
 }
 
 .permission-content h3 {
-  font-size: 21px;
-
+  font-size: 20px;
   font-weight: 600;
-
   color: #2b2b2b;
-
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .permission-content p {
   font-size: 15px;
-
   color: #666666;
-
-  margin-bottom: 24px;
-
+  margin-bottom: 18px;
   line-height: 1.5;
 }
 
-/* =========================
-   Divider
-========================= */
+.permission-media-box {
+  width: 220px;
+  height: 130px;
+  border-radius: 8px;
+  background: #111111;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888888;
+  font-size: 12px;
+  border: 1px solid #e0ded9;
+}
+
+.permission-media-box video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mic-check-box {
+  width: 220px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #faf9f7;
+  border: 1px solid #e0ded9;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mic-meter-track {
+  width: 100%;
+  height: 12px;
+  background: #e6e3df;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.mic-meter-fill {
+  height: 100%;
+  background: #7eb5e9;
+  border-radius: 6px;
+  transition: width 0.08s ease;
+}
+
+.mic-meter-fill.active {
+  background: #2e7d32;
+}
+
+.mic-status-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #555555;
+  text-align: center;
+}
 
 .divider {
   height: 1px;
-
   background: #ebe9e5;
-
-  margin-left: 48px;
-  margin-right: 48px;
+  margin-left: 44px;
+  margin-right: 44px;
 }
 
 /* =========================
@@ -158,62 +201,85 @@ body {
 ========================= */
 
 .btn {
-  padding: 12px 24px;
-
+  padding: 11px 22px;
   border-radius: 8px;
-
   border: none;
-
   font-size: 14px;
   font-weight: 600;
-
   cursor: pointer;
-
-  transition:
-    background 0.15s ease,
-    transform 0.1s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .btn:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
-/* Reference dark button */
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
 
+/* Reference dark button (Camera Access) */
 .btn-dark {
   background: #263c53;
-
   color: white;
 }
 
-.btn-dark:hover {
-  background: #1f3246;
+.btn-dark:hover:not(:disabled) {
+  background: #14273b;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(20, 39, 59, 0.35);
 }
 
-/* Reference blue */
-
+/* Reference blue button (Go To Test, Full Screen) */
 .btn-light-blue {
   background: #7eb5e9;
-
   color: white;
 }
 
-.btn-light-blue:hover {
-  background: #6ca8df;
+.btn-light-blue:hover:not(:disabled) {
+  background: #2575cf;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 117, 207, 0.42);
 }
 
 /* White secondary button */
-
 .btn-outline {
   background: white;
-
   border: 1px solid #d9d6d1;
-
   color: #333333;
 }
 
-.btn-outline:hover {
-  background: #faf9f7;
+.btn-outline:hover:not(:disabled) {
+  background: #f0f6fc;
+  border-color: #7eb5e9;
+  color: #1f5ca6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(126, 181, 233, 0.25);
+}
+
+/* Verified state button */
+.btn-success {
+  background: #2e7d32;
+  color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+  background: #1b5e20;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(46, 125, 50, 0.35);
+}
+
+.btn-large {
+  padding: 12px 26px;
+  font-size: 15px;
 }
 
 /* =========================
@@ -223,56 +289,195 @@ body {
 .bottom-actions {
   width: 100%;
   max-width: 920px;
-
   display: flex;
-
   gap: 12px;
-
-  margin-top: 18px;
-
+  margin-top: 24px;
   justify-content: flex-start;
 }
 
 /* =========================
-   Camera
+   Camera Feed
 ========================= */
 
 .video-preview {
   position: fixed;
-
   top: 20px;
   right: 20px;
-
-  width: 180px;
-  height: 115px;
-
+  width: 170px;
+  height: 110px;
   object-fit: cover;
-
   border-radius: 8px;
-
   background: #111111;
-
-  z-index: 10;
+  z-index: 100;
+  border: 2px solid rgba(0, 0, 0, 0.15);
 }
-
-/*
-This keeps the camera element alive
-for screenshots but prevents it from
-appearing in the layout.
-*/
 
 .hidden-video {
   position: fixed;
-
   width: 1px;
   height: 1px;
-
   opacity: 0;
-
   pointer-events: none;
-
   top: -100px;
   left: -100px;
+}
+
+/* =========================
+   Security & Recovery Alerts
+========================= */
+
+.alert-banner {
+  width: 100%;
+  max-width: 920px;
+  margin-bottom: 16px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.alert-banner.warning {
+  background: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+}
+
+.alert-banner.danger {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.alert-banner.info {
+  background: #d1ecf1;
+  border: 1px solid #bee5eb;
+  color: #0c5460;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-card {
+  background: white;
+  border-radius: 12px;
+  padding: 28px 32px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modal-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222222;
+}
+
+.modal-card p {
+  font-size: 14px;
+  color: #555555;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* =========================
+   Rules & Warning Modal (Same UI Theme on Fullscreen)
+========================= */
+
+.rules-modal-card {
+  background: #ffffff;
+  border: 1px solid #e7e4df;
+  border-radius: 14px;
+  padding: 32px 36px;
+  max-width: 560px;
+  width: 90%;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16);
+  display: flex;
+  flex-direction: column;
+  animation: modalAppear 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.rules-modal-header {
+  margin-bottom: 4px;
+}
+
+.rules-modal-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #242424;
+  margin-bottom: 6px;
+}
+
+.rules-modal-sub {
+  font-size: 14px;
+  color: #666666;
+  line-height: 1.5;
+}
+
+.rules-list-box {
+  background: #faf9f7;
+  border: 1px solid #ebe9e5;
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 18px 0 24px;
+}
+
+.rules-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333333;
+}
+
+.rule-num {
+  font-weight: 700;
+  color: #263c53;
+  min-width: 18px;
+}
+
+.rules-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rules-modal-actions button {
+  width: 100%;
+  justify-content: center;
 }
 
 /* =========================
@@ -282,54 +487,43 @@ appearing in the layout.
 .exam-page {
   width: 100%;
   min-height: 100vh;
-
   background: #f5f4f2;
-
-  padding: 48px 40px;
+  padding: 40px;
 }
 
 .exam-container {
   width: 100%;
   max-width: 920px;
-
   margin: 0 auto;
 }
 
-/* =========================
-   Exam Header
-========================= */
-
 .exam-header {
   display: flex;
-
   justify-content: space-between;
   align-items: center;
-
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .exam-header h3 {
-  font-size: 16px;
-
-  font-weight: 500;
-
+  font-size: 17px;
+  font-weight: 600;
   color: #333333;
 }
 
 .end-test-btn {
-  padding: 11px 20px;
-
+  padding: 10px 20px;
   border: none;
   border-radius: 8px;
-
   background: #263c53;
-
   color: white;
-
   font-size: 14px;
   font-weight: 600;
-
   cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.end-test-btn:hover {
+  background: #1f3246;
 }
 
 /* =========================
@@ -338,34 +532,25 @@ appearing in the layout.
 
 .question-card {
   background: #ffffff;
-
   border: 1px solid #e7e4df;
-
   border-radius: 12px;
-
   padding: 36px 40px;
-
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.025);
 }
 
 .question-card h2 {
   font-size: 14px;
-
   color: #777777;
-
   font-weight: 500;
-
   margin-bottom: 14px;
 }
 
 .question-card > p {
-  font-size: 20px;
-
+  font-size: 19px;
   font-weight: 600;
-
   color: #292929;
-
-  margin-bottom: 26px;
+  margin-bottom: 24px;
+  line-height: 1.45;
 }
 
 /* =========================
@@ -374,35 +559,41 @@ appearing in the layout.
 
 .option-row {
   width: 100%;
-
   display: flex;
-
   align-items: center;
-
   gap: 12px;
-
   padding: 14px 16px;
-
   margin-bottom: 10px;
-
   border: 1px solid #e6e3df;
-
   border-radius: 8px;
-
   background: white;
-
   cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .option-row:hover {
-  background: #faf9f7;
+  background: #f0f7ff;
+  border-color: #7eb5e9;
+  transform: translateX(4px);
+  box-shadow: 0 2px 10px rgba(126, 181, 233, 0.18);
+}
+
+.option-row:has(input:checked) {
+  background: #eaf3fb;
+  border-color: #2575cf;
+  box-shadow: 0 0 0 1px #2575cf;
 }
 
 .option-row input {
-  width: 17px;
-  height: 17px;
-
+  width: 18px;
+  height: 18px;
   accent-color: #263c53;
+  cursor: pointer;
+}
+
+.option-row span {
+  font-size: 15px;
+  color: #333333;
 }
 
 /* =========================
@@ -411,31 +602,108 @@ appearing in the layout.
 
 .navigation-buttons {
   display: flex;
-
   justify-content: space-between;
-
   margin-top: 30px;
 }
 
 .navigation-buttons button {
   padding: 11px 24px;
-
   border: none;
-
   border-radius: 8px;
-
   background: #263c53;
-
   color: white;
-
   font-size: 14px;
   font-weight: 600;
-
   cursor: pointer;
 }
 
 .navigation-buttons button:disabled {
   background: #c2c7cd;
-
   cursor: not-allowed;
+}
+
+/* =========================
+   Invigilator Screenshot Review Modal (Feature 9)
+========================= */
+
+.review-modal-content {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.review-modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid #e7e4df;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.review-modal-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #242424;
+}
+
+.review-grid-container {
+  padding: 20px 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.review-thumbnails-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.review-shot-card {
+  border: 1px solid #e7e4df;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #faf9f7;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.review-shot-card:hover {
+  transform: translateY(-2px);
+  border-color: #7eb5e9;
+}
+
+.review-shot-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  background: #111;
+}
+
+.review-shot-meta {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: #555;
+}
+
+.review-shot-meta strong {
+  color: #222;
+}
+
+.review-modal-footer {
+  padding: 14px 24px;
+  border-top: 1px solid #e7e4df;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
